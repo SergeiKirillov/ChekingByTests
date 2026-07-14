@@ -31,9 +31,9 @@ class Application:
         userText=""
         if nameLog=="":
             userL=(self.ui.ask_input("Введите имя пользователя > ")).replace(" ", "")
-            #user = self.context.database.load_user(userL)
-            self.context.userdb.name=userL
-            user = self.context.userdb.LoadUser()
+            user = self.context.database.load_user(userL)
+            #self.context.userdb.name=userL
+            #user = self.context.userdb.LoadUser()
             if user is not None:
                 userText=user["name"] 
             else :

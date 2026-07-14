@@ -44,7 +44,7 @@ class UserDB:
             else:
                 try:
                     #FIXME: Нужно перевести ввод данных на context.database
-                    self.context.database.load_user(userL)
+                    #self.context.database.load_user(userL)
                     file_path = Path("data")/ "users" / f"{self.name}.json"
                     file_path.parent.mkdir(parents=True, exist_ok=True)
                     with open(file_path,"r",encoding="utf-8") as f:
