@@ -39,5 +39,5 @@ class TerminalUI(BaseUI):
 
     def pause(self):
 
-        input("\nНажмите Enter для продолжения...")
+         input("\nНажмите Enter для продолжения...")
 
