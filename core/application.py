@@ -1,4 +1,4 @@
-from data.users.user import User
+#from data.users.user import User
 from data.users.userDB import UserDB
 from core.question_db import QuestionDB
 from core.question_db import Question_v2
@@ -31,18 +31,15 @@ class Application:
         userText=""
         if nameLog=="":
             userL=(self.ui.ask_input("Введите имя пользователя > ")).replace(" ", "")
-            user = self.context.database.load_user(userL)
-            #self.context.userdb.name=userL
-            #user = self.context.userdb.LoadUser()
-            if user is not None:
-                userText=user["name"] 
-            else :
-                self.ui.show_message("Пользователя не существует")
-                self.registration(userL)
         else:
-            userText = nameLog
+            userL = nameLog #После регистрации проверяем что пользователь создан 
         
-        self.context.session.user=userText 
+        user=self.context.userdb.LoadUser(userL)
+        if user is not None:
+            self.context.session.user=user.name
+        else:
+            self.ui.show_message("Пользователя не существует")
+            self.registration(userL)
         self.run()
         
             
@@ -57,22 +54,13 @@ class Application:
         else:
             if (self.ui.ask_input(f"Вы хотите добавить нового пользователя ({nameLog}) > (Y/N)")).upper() == "Y":
                 loginNum = nameLog
-
             else:
                 self.registration()
                 exit()
 
-
-        data={
-            "name": loginNum,
-            "total_tests": 0,
-            "total_questions": 0,
-            "total_correct": 0,
-            "total_wrong": 0,
-            "questions_per_session": 10,
-            "topics": {}
-        }
-        dataNewuser = self.context.database.save_user(loginNum,data)
+     
+        #dataNewuser = self.context.database.save_user(loginNum,data)
+        dataNewuser = self.context.userdb.createUser(loginNum)
         self.login(loginNum)
         
         

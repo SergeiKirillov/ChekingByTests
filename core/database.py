@@ -34,7 +34,7 @@ class Database:
         filename=(self.users/f"{login}.json")
         return self.load_json(filename)
     
-    def save_user0(self, login, data):
+    def create_user(self, login, data):
         filename=(self.users/f"{login}.json")
         return self.save_json(filename, data)
     
@@ -46,7 +46,7 @@ class Database:
         на которые пользователь ответил правильно
         """
         #TODO: db - получать или считывать из сессии, чтобы не передавать в метод
-
+        
         try:
             filename=(self.users/f"{login}.json")
             user_data = self.load_json(filename)

@@ -8,7 +8,7 @@ class ApplicationContext:
         self.session = Session()
         self.database = Database()
         #self.constants = Constants()
-        self.userdb = UserDB()
+        self.userdb = UserDB(self)
     
     
         
