@@ -76,8 +76,9 @@ class Application:
         # numbers_OK_number - переменная в которую из файла пользователя мы передаём список вопросов на который получен положительный ответ 
         # countAns - кол-во вопросв при тестировании
 
-        self.context.userdb.name=self.context.session.user
-        self.context.userdb=self.context.userdb.LoadUser()
+        #self.context.userdb.name=self.context.session.user
+        
+        self.context.userdb=self.context.userdb.LoadUser(self.context.session.user)
         countAns =self.context.userdb.questions_per_session #кол-во вопросв при тестировании
         numbers_OK_number = self.context.userdb.topics["electrical"]["question_stats"]
 
@@ -139,8 +140,13 @@ class Application:
 
             self.ui.show_message(f"Кол- во вопросов {countAns}, кол-во правильных ответов {len(number_god_session)}")
             full_ans=number_god_session
-            self.context.database.save_user(self.context.session.user, self.context.session.theme, number_god_session)
+
+            #self.context.database.save_user(self.context.session.user, self.context.session.theme, number_god_session)
+            #[ ]: Сохраняем результаты работы с помощью класса UseDB
             
+            #self.context.userdb.save_user(self.context.session.user, self.context.session.theme, number_god_session)
+            self.context.userdb.save_user(number_god_session)
+
 
 
             self.ui.pause()

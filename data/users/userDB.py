@@ -63,53 +63,55 @@ class UserDB:
             
 
         
-    def save_user(self, context, correct_questions):
+    def save_user(self, correct_questions):
         """
-        name - имя пользователя
-
-        correct_questions - список номеров вопросов,
-        на которые пользователь ответил правильно
-        """
-        #TODO: db - получать или считывать из сессии, чтобы не передавать в метод
-
+        login - имя пользователя
+        theme - тема контрольных заданий и равна имени файла с контрольными вопросами
+        correct_questions - список номеров вопросов, на которые пользователь ответил правильно
+        """ 
         try:
             
-            #file_name = "data/users/"+ self.name +".json"
-            #with open(file_name,"r", encoding="utf-8") as file:
-            file_path = Path("data")/ "users" / f"{context.session.user}.json"
-            file_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(file_path,"r",encoding="utf-8") as file:
-                user_data = json.load(file)
-            #print(type(user_data))
-            #print(type(correct_questions))
+            # #file_name = "data/users/"+ self.name +".json"
+            # #with open(file_name,"r", encoding="utf-8") as file:
+            # file_path = Path("data")/ "users" / f"{context.session.user}.json"
+            # file_path.parent.mkdir(parents=True, exist_ok=True)
+            # with open(file_path,"r",encoding="utf-8") as file:
+            #     user_data = json.load(file)
+            # #print(type(user_data))
+            # #print(type(correct_questions))
+
+            user_data = self.context.database.load_user(self.context.session.user)
+
             #Ищем ключь равный имени файла теста
             
-            if context.session.theme in user_data['topics']:
+            if self.context.session.theme in user_data['topics']:
                 #Если найден то добавляем в [ключ][ключ] список правильных ответов
-                ...
+                
                 # Добавляем новые вопросы, избегая дубликатов
-                current_questions = set(user_data['topics'][context.session.theme]['question_stats'])
+                current_questions = set(user_data['topics'][self.context.session.theme]['question_stats'])
                 for qid in correct_questions:
                     current_questions.add(qid)
-                user_data['topics'][context.session.theme]["question_stats"]=sorted(list(current_questions))
+                user_data['topics'][self.context.session.theme]["question_stats"]=sorted(list(current_questions))
 
             else:
                 #сортируем по возрастанию
                 correct_questions_sorted = sorted(list(correct_questions))
                 #Если ключ не найден, то добавляем всю секцию
-                user_data["topics"][context.session.theme]={
+                user_data["topics"][self.context.session.theme]={
                     "questions_per_session": 10,
                     "question_stats": correct_questions_sorted
                 }   
             
-            #print(user_data)    
-            
-            with open(file_path, "w", encoding="utf-8") as file:
-                json.dump(
-                    user_data,
-                    file,
-                    ensure_ascii=False,
-                    indent=4
-                )
+            self.context.database.save_user(self.context.session.user, user_data)
+
+            # #print(user_data)    
+            # with open(file_path, "w", encoding="utf-8") as file:
+            #     json.dump(
+            #         user_data,
+            #         file,
+            #         ensure_ascii=False,
+            #         indent=4
+            #     )
+
         except Exception as e:
             raise e
