@@ -71,22 +71,11 @@ class UserDB:
         """ 
         try:
             
-            # #file_name = "data/users/"+ self.name +".json"
-            # #with open(file_name,"r", encoding="utf-8") as file:
-            # file_path = Path("data")/ "users" / f"{context.session.user}.json"
-            # file_path.parent.mkdir(parents=True, exist_ok=True)
-            # with open(file_path,"r",encoding="utf-8") as file:
-            #     user_data = json.load(file)
-            # #print(type(user_data))
-            # #print(type(correct_questions))
-
             user_data = self.context.database.load_user(self.context.session.user)
 
             #Ищем ключь равный имени файла теста
-            
             if self.context.session.theme in user_data['topics']:
                 #Если найден то добавляем в [ключ][ключ] список правильных ответов
-                
                 # Добавляем новые вопросы, избегая дубликатов
                 current_questions = set(user_data['topics'][self.context.session.theme]['question_stats'])
                 for qid in correct_questions:
@@ -103,15 +92,6 @@ class UserDB:
                 }   
             
             self.context.database.save_user(self.context.session.user, user_data)
-
-            # #print(user_data)    
-            # with open(file_path, "w", encoding="utf-8") as file:
-            #     json.dump(
-            #         user_data,
-            #         file,
-            #         ensure_ascii=False,
-            #         indent=4
-            #     )
 
         except Exception as e:
             raise e
