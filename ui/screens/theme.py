@@ -16,42 +16,7 @@ class Theme(BaseScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-            
-
-        #blThemeMain=BoxLayout(orientation="vertical")
-        #blThemeTitle=BoxLayout(orientation="horizontal")
-        #blThemeTitle.size_hint_y=None
-        #blThemeTitle.height=Constants.HEADER_HEIGHT*0.5
-        #blThemeSelect=BoxLayout(orientation="vertical")
-        
-        #lblTitle = Label(text="Выбор темы контрольных заданий", color="yellow",font_size=Constants.HEADER_HEIGHT*0.5)
-        ##lblTitle.size_hint=(None,None)
-        ##lblTitle.font_size=30
-        #blThemeTitle.add_widget(lblTitle)
-
-        #btnThemeElect = Button(text="Электробезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        #btnThemeElect.id="electr"
-        #btnThemeElect.bind(on_release=self.btnThemeSelect_click)
-
-        #btnThemeProm = Button(text="Промбезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        #btnThemeProm.id="Prombez"
-        #btnThemeProm.bind(on_release=self.btnThemeSelect_click)
-
-        
-        #blThemeSelect.add_widget(Widget())
-        #blThemeSelect.add_widget(btnThemeElect)
-        #blThemeSelect.add_widget(btnThemeProm)
-        #blThemeSelect.add_widget(Widget())
-        #blThemeSelectWindows=BoxLayout(orientation="horizontal")
-        #blThemeSelectWindows.add_widget(Widget())
-        #blThemeSelectWindows.add_widget(blThemeSelect)
-        #blThemeSelectWindows.add_widget(Widget())    
-
-        #blThemeMain.add_widget(blThemeTitle)
-        #blThemeMain.add_widget(blThemeSelectWindows)
-        #blThemeMain.add_widget(navigatorMenu(self.change_screen))
        
-        #self.add_widget(blThemeMain)
 
         #TODO: на экране выбора темы опроса переделываем под base_screen
         self.title.add_widget(
@@ -88,6 +53,10 @@ class Theme(BaseScreen):
             #screen.data={"topic":"Промбезопастность","questions":10,"user":"019261"}
             self.session.topic="Промбезопастность"
             self.session.theme="Prombez"
+        
+        #print(self.context.session.theme)
+        #print(self.context.session.topic)
+
         self.manager.current="testing"            #Отображаем экран    
 
     def change_screen(self, screen):
