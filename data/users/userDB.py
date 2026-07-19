@@ -31,6 +31,8 @@ class UserDB:
         userDB.topics=data["topics"]
         return userDB
     
+    
+    
     def to_dict(self):
         return {
             "name": self.name,
@@ -58,6 +60,8 @@ class UserDB:
             self.name=login
             data=self.to_dict()
             self.context.database.create_user(login,data)
+            #[ ]:После создания пользователя нужно данные загрузить в session
+            #  
         except Exception as e:
             raise e
             

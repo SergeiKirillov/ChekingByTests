@@ -27,11 +27,11 @@ class MainScreen(BaseScreen):
         blCenter=BoxLayout(orientation="vertical")
         
         anchorLogin=AnchorLayout(anchor_x = "center",anchor_y = "center")
-        txtLoginName=TextInput(_hint_text="Введите табельный номер, и нажмите Enter", size_hint=(None, None), size=(500, 30),multiline=False)
-        txtLoginName.input_filter = "int"  # Ограничение ввода только цифрами
-        txtLoginName.bind(on_text_validate=self.on_enter_pressed) # type: ignore
-        txtLoginName.bind(text=self.limit_length) # type: ignore # Ограничение длины ввода
-        anchorLogin.add_widget(txtLoginName)
+        self.txtLoginName=TextInput(_hint_text="Введите табельный номер, и нажмите Enter", size_hint=(None, None), size=(500, 30),multiline=False)
+        self.txtLoginName.input_filter = "int"  # Ограничение ввода только цифрами
+        self.txtLoginName.bind(on_text_validate=self.on_enter_pressed) # type: ignore
+        self.txtLoginName.bind(text=self.limit_length) # type: ignore # Ограничение длины ввода
+        anchorLogin.add_widget(self.txtLoginName)
         
         self.lblLoginNameStatus = Label()
         self.lblLoginNameStatus.text=""
@@ -41,7 +41,7 @@ class MainScreen(BaseScreen):
         self.btnRegistrator = Button(text="Pегистрация", size_hint=(None,None), size=(200,50))
         self.btnRegistrator.opacity = 0
         self.btnRegistrator.disabled = True
-        self.btnRegistrator.bind(on_click=self.btnRegistrator_click) # type: ignore
+        self.btnRegistrator.bind(on_press=self.btnRegistrator_click) # type: ignore
         anchorRegistrator=AnchorLayout(anchor_x = "center",anchor_y = "center")
         anchorRegistrator.add_widget(self.btnRegistrator)
 
@@ -72,24 +72,21 @@ class MainScreen(BaseScreen):
 #TODO: Обработку нажатия Enter в TextInput поля ввода табельного номера
     def on_enter_pressed(self, instance):
         
-        user = self.database.load_user(instance.text)
+        #[x]: Проверка на существование пользователя в userdb.load
+        user = self.context.userdb.LoadUser(instance.text)
+        if user is not None:
+            self.lblLoginNameStatus.text=""
+            self.btnRegistrator.opacity=0
+            self.btnRegistrator.disabled=True
+            self.context.session.user=user.name
+            self.manager.current = "theme"
 
-        #self.context.userdb.name=self.context.session.user
-        #self.context.userdb=self.context.userdb.LoadUser()
-        #print(type(user))
-
-        if bool(user): #если словарь не путой 
-            self.session.user=instance.text
-            #self.context.session.user=instance.text           
-            self.change_screen("theme")  # Переход на экран выбора темы
         else:
             self.lblLoginNameStatus.text="Нет такого пользователя"
             self.btnRegistrator.opacity=1
             self.btnRegistrator.disabled=False
 
-
-
-        
+         
 
 #TODO:ограничение кол-ва вводимых знаков в проле ввода табельного номера
     def limit_length(self, instance, value):
@@ -98,11 +95,21 @@ class MainScreen(BaseScreen):
             instance.text = value[:max_length]
 
     def btnRegistrator_click(self, instance):
-        pass
+        self.context.userdb.createUser(self.txtLoginName.text)
+        self.context.session.user=self.context.userdb.name
+        self.userdbTOsession() #[ ]: Передаём значение с userdb в session 
+        self.manager.current = "theme"
+        
+    def userdbTOsession(self):
+        self.context.session.user = self.context.userdb.name
+        self.context.session.topic = "" #Название теста для элемента title
+        self.context.session.theme = "" #имя файла где лежат тесты
+        self.context.session.questions = [] #пустое пока не выбран тест
+        #print(self.context.session.user)
+        #print(self.context.session.topic)
+        #print(self.context.session.theme)
+        #print(self.context.session.questions)
 
-
-
-    
-
+        
     
 
