@@ -36,9 +36,7 @@ class MyApp(App):
     
     def build(self):
         sc=ScreenManager()
-        self.context2=ApplicationContext()
        
-
         sc.add_widget(MainScreen(name="main"))
         sc.add_widget(Theme(name="theme"))
         sc.add_widget(Setting(name="setting"))
