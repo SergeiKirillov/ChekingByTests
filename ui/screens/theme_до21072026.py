@@ -69,12 +69,3 @@ class Theme(BaseScreen):
     def on_pre_enter(self, *args):
         pass
 
-    def button_create(self,content):
-        tests=TestManager(content).load_tests()
-        for test in tests:
-            btn=Button(
-                text=test.name,
-                size_hint_y=None,
-                height =50
-            )
-            btn.test=test

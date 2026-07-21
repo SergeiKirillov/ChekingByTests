@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.uix import widget
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
@@ -75,9 +76,17 @@ class Theme(BaseScreen):
         for test in tests:
             btn=Button(
                 text=test.description,
-                size_hint_y=None,
-                height =50
+                size_hint=(None,None),
+                height =Constants.BUTTON_HEIGHT,
+                width=Constants.BUTTON_WIDTH,
             )
             btn.test=test
+            btn.bind(on_release=self.btnThemeSelect_click)
             self.blThemeButton.add_widget(btn)
         self.blThemeButton.add_widget(Widget())
+
+    def btnThemeSelect_click(self, instance):
+        self.context.session.topic=str(instance.test.title)
+        self.context.session.theme=str(instance.test.file)
+        self.manager.current = "main"
+        #screen = self.manager.get_screen("testing")
