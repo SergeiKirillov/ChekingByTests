@@ -36,9 +36,9 @@ class MyApp(App):
     
     def build(self):
         sc=ScreenManager()
-       
-        sc.add_widget(MainScreen(name="main"))
-        sc.add_widget(Theme(name="theme"))
+
+        sc.add_widget(Theme(name="theme")) # начинаем с выбора темы для
+        sc.add_widget(MainScreen(name="main"))  #окно ввода табельного номера
         sc.add_widget(Setting(name="setting"))
         sc.add_widget(Testing(name="testing"))
         sc.add_widget(Exsam(name="exsam"))

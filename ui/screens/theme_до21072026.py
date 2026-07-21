@@ -24,19 +24,19 @@ class Theme(BaseScreen):
             Label(text="Выберите тему для тестирования", color="yellow", font_size=Constants.HEADER_HEIGHT*0.5)
         )
         
-        # btnThemeElect = Button(text="Электробезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        # btnThemeElect.id="electr"
-        # btnThemeElect.bind(on_release=self.btnThemeSelect_click)
-        # btnThemeProm = Button(text="Промбезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        # btnThemeProm.id="Prombez"
-        # btnThemeProm.bind(on_release=self.btnThemeSelect_click)
-        self.blThemeButton=BoxLayout(orientation="vertical")
-        # blThemeButton.add_widget(Widget())
-        # blThemeButton.add_widget(btnThemeElect)
-        # blThemeButton.add_widget(btnThemeProm)
-        # blThemeButton.add_widget(Widget())
+        btnThemeElect = Button(text="Электробезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
+        btnThemeElect.id="electr"
+        btnThemeElect.bind(on_release=self.btnThemeSelect_click)
+        btnThemeProm = Button(text="Промбезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
+        btnThemeProm.id="Prombez"
+        btnThemeProm.bind(on_release=self.btnThemeSelect_click)
+        blThemeButton=BoxLayout(orientation="vertical")
+        blThemeButton.add_widget(Widget())
+        blThemeButton.add_widget(btnThemeElect)
+        blThemeButton.add_widget(btnThemeProm)
+        blThemeButton.add_widget(Widget())
         contentCenterAnchor=AnchorLayout(anchor_x = "center",anchor_y = "center")
-        contentCenterAnchor.add_widget(self.blThemeButton)
+        contentCenterAnchor.add_widget(blThemeButton)
         self.contentCenter.add_widget(contentCenterAnchor)
     
 
@@ -67,17 +67,14 @@ class Theme(BaseScreen):
             self.manager.current=screen
 
     def on_pre_enter(self, *args):
-        self.button_create(self.content)
+        pass
 
     def button_create(self,content):
         tests=TestManager(content).load_tests()
-        self.blThemeButton.add_widget(Widget())
         for test in tests:
             btn=Button(
-                text=test.description,
+                text=test.name,
                 size_hint_y=None,
                 height =50
             )
             btn.test=test
-            self.blThemeButton.add_widget(btn)
-        self.blThemeButton.add_widget(Widget())

@@ -8,6 +8,8 @@ from kivy.metrics import dp,sp
 from data.config.constants import Constants
 from ui.screens.base_screen import BaseScreen
 
+from core.testManager import TestManager
+
 
 class Testing(BaseScreen):
     
@@ -42,3 +44,6 @@ class Testing(BaseScreen):
         #self.lblTitle.text=self.data["topic"]
         txtTitle=self.session.topic
         self.lblTitle.text=txtTitle
+
+
+

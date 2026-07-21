@@ -2,6 +2,14 @@ from pathlib import Path
 import json
 #from data.config.session import Session
 
+
+class TestInfo():
+    def __init__(self, file, idDB, title, description):
+        self.file = file
+        self.idDB = idDB
+        self.title = title
+        self.description = description
+
 class TestManager:
     def __init__(self, context):
         self.context = context
@@ -17,3 +25,22 @@ class TestManager:
         filename = self.tests_dir / f"{self.context.session.theme}.json"
         with open(filename, "r", encoding="utf-8") as f:
             return json.load(f)
+
+    def load_tests(self):
+        tests = []
+        for file in Path(self.tests_dir).glob("*.json"):
+            with open(file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            tests.append(
+                TestInfo(
+                    file,
+                    data["idDB"],
+                    data["title"],
+                    data["description"]
+                )
+            )
+        return tests
+
+
+
+
