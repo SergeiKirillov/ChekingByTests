@@ -79,7 +79,7 @@ class MainScreen(BaseScreen):
             self.btnRegistrator.opacity=0
             self.btnRegistrator.disabled=True
             self.context.session.user=user.name
-            self.manager.current = "theme"
+            self.manager.current = "testing"
 
         else:
             self.lblLoginNameStatus.text="Нет такого пользователя"
@@ -98,7 +98,7 @@ class MainScreen(BaseScreen):
         self.context.userdb.createUser(self.txtLoginName.text)
         self.context.session.user=self.context.userdb.name
         self.userdbTOsession() #[ ]: Передаём значение с userdb в session 
-        self.manager.current = "theme"
+        self.manager.current = "testing"
 #TODO: Заносим данные из файла пользователя в данные session
     def userdbTOsession(self):
         #[ ]: Нужно передать в сессию
