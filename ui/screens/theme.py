@@ -13,6 +13,7 @@ from ui.screens.base_screen import BaseScreen
 from core.testManager import TestManager
 
 
+
 class Theme(BaseScreen):
     
     def __init__(self, **kwargs):
@@ -88,5 +89,5 @@ class Theme(BaseScreen):
     def btnThemeSelect_click(self, instance):
         self.context.session.topic=str(instance.test.title)
         self.context.session.theme=str(instance.test.file)
-        self.manager.current = "main"
+        self.manager.current = "login"
         #screen = self.manager.get_screen("testing")

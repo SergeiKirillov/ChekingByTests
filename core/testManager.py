@@ -10,6 +10,9 @@ class TestInfo():
         self.title = title
         self.description = description
 
+
+#[ ]: Нужло ли класс ТestManager вводить в  ApplicationContext
+
 class TestManager:
     def __init__(self, context):
         self.context = context
@@ -28,12 +31,13 @@ class TestManager:
 
     def load_tests(self):
         tests = []
+        #[ ]: TestManager - Возможно нужно использовать self.context.database.loadtest
         for file in Path(self.tests_dir).glob("*.json"):
             with open(file, "r", encoding="utf-8") as f:
                 data = json.load(f)
             tests.append(
                 TestInfo(
-                    file,
+                    file.stem, #[x]: Из file убрать путь и оставить только имя файла
                     data["idDB"],
                     data["title"],
                     data["description"]

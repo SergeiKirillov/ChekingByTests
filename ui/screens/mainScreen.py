@@ -22,7 +22,7 @@ class MainScreen(BaseScreen):
 
 
         self.title.add_widget(
-            Label(text="Программа для проверки знаний", color="yellow", font_size=Constants.HEADER_HEIGHT*0.5)
+            Label(text="Введите табельной номер тестируемого работника", color="yellow", font_size=Constants.HEADER_HEIGHT*0.5)
         )
         blCenter=BoxLayout(orientation="vertical")
         
@@ -38,7 +38,7 @@ class MainScreen(BaseScreen):
         self.lblLoginNameStatus.color="red"
         self.lblLoginNameStatus.font_size=Constants.HEADER_HEIGHT*0.3
         
-        self.btnRegistrator = Button(text="Pегистрация", size_hint=(None,None), size=(200,50))
+        self.btnRegistrator = Button(text="Новый тестируемый", size_hint=(None,None), size=(200,50))
         self.btnRegistrator.opacity = 0
         self.btnRegistrator.disabled = True
         self.btnRegistrator.bind(on_press=self.btnRegistrator_click) # type: ignore
@@ -57,7 +57,7 @@ class MainScreen(BaseScreen):
         self.contentCenter.add_widget(blCenter)
 
 
-
+#TODO: переход на другой экран
     def change_screen(self, screen):
         if screen=="exit":
             App.get_running_app().stop()  # type: ignore
@@ -93,14 +93,21 @@ class MainScreen(BaseScreen):
         max_length = 8  # Максимальная длина ввода
         if len(value) > max_length:
             instance.text = value[:max_length]
-
+#TODO: При нажатии на кнопку регистрации создаем файл с нулевыми данными
     def btnRegistrator_click(self, instance):
         self.context.userdb.createUser(self.txtLoginName.text)
         self.context.session.user=self.context.userdb.name
         self.userdbTOsession() #[ ]: Передаём значение с userdb в session 
         self.manager.current = "theme"
-        
+#TODO: Заносим данные из файла пользователя в данные session
     def userdbTOsession(self):
+        #[ ]: Нужно передать в сессию
+        # Имя пользователя
+        # Тема проверки знаний на русском языке
+        # Какая тема будет использоваться
+        # Если уже отвечали на вопросы выбранной темы то записать их
+        #
+        #
         self.context.session.user = self.context.userdb.name
         self.context.session.topic = "" #Название теста для элемента title
         self.context.session.theme = "" #имя файла где лежат тесты
