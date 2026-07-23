@@ -78,7 +78,12 @@ class MainScreen(BaseScreen):
             self.lblLoginNameStatus.text=""
             self.btnRegistrator.opacity=0
             self.btnRegistrator.disabled=True
-            self.context.session.user=user.name
+            self.context.session.user=user.name # Передаем имя пользователя из userdb в session
+            #[ ]: Если тема найдена то возвращаем список, а если нет то пустой список
+            if user.topics[self.context.session.theme] is not None:
+                self.context.session.questions = user.topics[self.context.session.theme]["question_stats"] # Передаем номера вопросов на которые были получены правильные ответы
+            else:
+                self.context.session.questions = []
             self.manager.current = "testing"
 
         else:
@@ -97,25 +102,11 @@ class MainScreen(BaseScreen):
     def btnRegistrator_click(self, instance):
         self.context.userdb.createUser(self.txtLoginName.text)
         self.context.session.user=self.context.userdb.name
-        self.userdbTOsession() #[ ]: Передаём значение с userdb в session 
-        self.manager.current = "testing"
-#TODO: Заносим данные из файла пользователя в данные session
-    def userdbTOsession(self):
-        #[ ]: Нужно передать в сессию
-        # Имя пользователя
-        # Тема проверки знаний на русском языке
-        # Какая тема будет использоваться
-        # Если уже отвечали на вопросы выбранной темы то записать их
-        #
-        #
-        self.context.session.user = self.context.userdb.name
-        self.context.session.topic = "" #Название теста для элемента title
-        self.context.session.theme = "" #имя файла где лежат тесты
-        self.context.session.questions = [] #пустое пока не выбран тест
-        #print(self.context.session.user)
-        #print(self.context.session.topic)
-        #print(self.context.session.theme)
-        #print(self.context.session.questions)
+        print(self.context.session.user)
+        self.context.session.questions = []
+        self.manager.current = "testing" #Переходим на страницу тестирования
+
+
 
         
     
