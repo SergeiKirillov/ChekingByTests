@@ -82,9 +82,9 @@ class MainScreen(BaseScreen):
             #[ ]: Если тема найдена то возвращаем список, а если нет то пустой список
             checkQ=user.topics.get(self.context.session.theme, "Undefined")
             #if user.topics[self.context.session.theme] is not None:
-            #if user.topics[self.context.session.theme] is not None:
             if checkQ != "Undefined":
-                self.context.session.questions = user.topics[self.context.session.theme]["question_stats"] # Передаем номера вопросов на которые были получены правильные ответы
+                #self.context.session.questions = user.topics[self.context.session.theme]["question_stats"] # Передаем номера вопросов на которые были получены правильные ответы
+                self.context.session.questions = checkQ["question_stats"]  # Передаем номера вопросов на которые были получены правильные ответы
             else:
                 self.context.session.questions = []
             self.manager.current = "testing"
