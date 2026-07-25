@@ -5,6 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from ui.screens.navigator import navigatorMenu
 from kivy.metrics import dp,sp
+from kivy.clock import Clock
 from data.config.constants import Constants
 from ui.screens.base_screen import BaseScreen
 
@@ -33,7 +34,7 @@ class Testing(BaseScreen):
         self.lblAsk.text_size = (Constants.LABEL_TEXT_SIZE, None)
         self.lblAsk.halign = "center"
         self.lblAsk.valign = "middle"
-        self.blTestingQuestion.add_widget(self.lblAsk)
+        
 
 
 
@@ -57,29 +58,55 @@ class Testing(BaseScreen):
 
 
     def on_pre_enter(self):
+        self.load_question()
+
+    def load_question(self):
         # Получаем номер вопроса для тестирования которого нет в списке правильных ответов
         number = self.context.session.rand_ans()
         self.context.session.get_answer(number)
+
         self.lblAsk.text=self.context.session.question
+        self.lblAsk.text_size = (self.lblAsk.width, None)
+        self.lblAsk.bind(width=lambda instance, value: setattr(instance, 'text_size', (value, None)))
+        self.lblAsk.bind(texture_size=lambda instance, value: setattr(instance, 'height', value[1]))
+        self.lblAsk.size_hint_y = None
+        self.blTestingQuestion.add_widget(self.lblAsk)
 
         # Получаем данные по этому вопросу
-
+        self.answer_buttons=[]
         for i, answer in enumerate(self.context.session.answers):
             btn = Button(text=answer["text"])
-            btn.text_size=(Constants.LABEL_TEXT_SIZE,None)
-            btn.halign = "center"
-            btn.valign = "middle"
+            #btn.text_size=(Constants.LABEL_TEXT_SIZE,None)
+            #btn.halign = "center"
+            #btn.valign = "middle"
+            btn.size_hint_y=None
+            btn.bind(width=lambda instance, value: setattr(instance, 'text_size', (value - 20, None)))
+            btn.bind(texture_size=lambda instance, value: setattr(instance, 'height', value[1] + 20))
             btn.bind(on_release=lambda btn, index=i: self.on_answer(index))
+            self.answer_buttons.append(btn)
             self.blTestingQuestion.add_widget(btn)
 
 
     def on_answer(self, index):
         # смотрим какое значение у поля correct ответа под номером index, если true то правильный ответ
-        intAns = self.context.session.answers[index]["text"]
-        blAns = self.context.session.answers[index]["correct"]
-        if self.context.session.answers[index]["correct"]:
-            print("Ответ правильный")
+        btn = self.answer_buttons[index]
+
+        if self.context.session.checking_answer(index):
+           btn.background_color=(0,1,0,1)   
         else:
-            print("Ответ не правильный")
+           btn.background_color=(1,0,0,1)
+        btn.disabled = True
+
+        Clock.schedule_once(self.show_next_question,2)        
+#Следующий вопрос
+    def show_next_question(self, dt):
+        self.reset_screen()
+        self.load_question()
+#Очистка экрана
+    def reset_screen(self):
+        self.blTestingQuestion.clear_widgets()  
 
 
+#[ ]: Статистика ответов на вопрос. 
+#[ ]: Цикл обратного отсчёта. Максимальное кол-во вопросов
+#[ ]: Сохранение данных в файл после окончания тестирования 

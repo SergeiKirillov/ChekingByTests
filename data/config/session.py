@@ -40,9 +40,9 @@ class Session:
 #        self.exclude.append(number)
         return number
 
-    #[ ]: долучаем данные о вопросе и
-    def get_answer(self,ask_number):
-        question = self.context.database.get_question(ask_number, self.context.database.load_test(self.context.session.theme))  #получаем выбранный вопрос в виде словаря
+    #[x]: долучаем данные о вопросе и
+    def get_answer(self,question_number):
+        question = self.context.database.get_question(question_number, self.context.database.load_test(self.context.session.theme))  #получаем выбранный вопрос в виде словаря
         self.id = question["id"]
         self.question = question["question"]
 
@@ -50,3 +50,25 @@ class Session:
         self.answers = question["answers"].copy()
         random.shuffle(self.answers)
 
+
+    def checking_answer(self, answer_index):
+        """
+        получаем индексный номер в списке ответов. 
+        При этом в элемент списка состоит из 2 полей 
+        - текст - текст ответа
+        - correct - если правильно то true 
+        """
+        intAns = self.context.session.answers[answer_index]["text"]
+        blAns = self.context.session.answers[answer_index]["correct"]
+        if self.context.session.answers[answer_index]["correct"]:
+            #print("Ответ правильный")
+            #
+            self.context.session.questions.append(self.context.session.id)
+            self.context.session.questions.sort()
+            self.context.session.questions_noOK.remove(self.context.session.id)
+            self.context.session.questions_noOK.sort()
+            return True
+        else:
+            #print("Ответ не правильный")
+            return False
+        
