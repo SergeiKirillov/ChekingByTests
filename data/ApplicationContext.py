@@ -5,7 +5,7 @@ from core.database import Database
 
 class ApplicationContext:
     def __init__(self):
-        self.session = Session()
+        self.session = Session(self)
         self.database = Database()
         #self.constants = Constants()
         self.userdb = UserDB(self)

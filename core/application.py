@@ -1,7 +1,7 @@
 #from data.users.user import User
 from data.users.userDB import UserDB
-from core.question_db import QuestionDB
-from core.question_db import Question_v2
+from core._delete_question_db import QuestionDB
+from core._delete_question_db import Question_v2
 from core.testing import Testing
 from core.testManager import TestManager
 from pathlib import Path
@@ -77,7 +77,8 @@ class Application:
         # countAns - кол-во вопросв при тестировании
 
         #self.context.userdb.name=self.context.session.user
-        
+
+        #[ ]: Переделать - используется статичная тема
         self.context.userdb=self.context.userdb.LoadUser(self.context.session.user)
         countAns =self.context.userdb.questions_per_session #кол-во вопросв при тестировании
         numbers_OK_number = self.context.userdb.topics["electrical"]["question_stats"]

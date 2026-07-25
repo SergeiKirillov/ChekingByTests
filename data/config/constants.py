@@ -11,3 +11,5 @@ class Constants:
     WINDOW_MIN_WIDTH= dp(1000)
     WINDOW_MIN_HEIGHT= dp(600)
 
+    LABEL_TEXT_SIZE = 1000
+

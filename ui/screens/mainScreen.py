@@ -79,14 +79,16 @@ class MainScreen(BaseScreen):
             self.btnRegistrator.opacity=0
             self.btnRegistrator.disabled=True
             self.context.session.user=user.name # Передаем имя пользователя из userdb в session
-            #[ ]: Если тема найдена то возвращаем список, а если нет то пустой список
+            #[x]: Если тема найдена то возвращаем список, а если нет то пустой список
             checkQ=user.topics.get(self.context.session.theme, "Undefined")
             #if user.topics[self.context.session.theme] is not None:
             if checkQ != "Undefined":
                 #self.context.session.questions = user.topics[self.context.session.theme]["question_stats"] # Передаем номера вопросов на которые были получены правильные ответы
                 self.context.session.questions = checkQ["question_stats"]  # Передаем номера вопросов на которые были получены правильные ответы
+                self.context.session.ask_count = checkQ["questions_per_session"] #Кол-во вопросов
             else:
                 self.context.session.questions = []
+                self.context.session.ask_count = 20
             self.manager.current = "testing"
 
         else:
@@ -107,6 +109,7 @@ class MainScreen(BaseScreen):
         self.context.session.user=self.context.userdb.name
         print(self.context.session.user)
         self.context.session.questions = []
+        self.context.session.ask_count = 20
         self.manager.current = "testing" #Переходим на страницу тестирования
 
 
