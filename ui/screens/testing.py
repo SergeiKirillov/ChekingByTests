@@ -22,7 +22,7 @@ class Testing(BaseScreen):
         blTestingMain=BoxLayout(orientation="vertical")
         blTestingTitle=BoxLayout(orientation="horizontal")
         self.blTestingQuestion=BoxLayout(orientation="vertical")
-        blTestingStatistic=BoxLayout(orientation="horizontal")
+        self.blTestingStatistic=BoxLayout(orientation="horizontal")
         
         self.lblTitle = Label(text="Тестирование", color="yellow")
         self.lblTitle.font_size = Constants.HEADER_HEIGHT*0.5
@@ -40,7 +40,7 @@ class Testing(BaseScreen):
 
         blTestingMain.add_widget(blTestingTitle)
         blTestingMain.add_widget(self.blTestingQuestion)
-        blTestingMain.add_widget(blTestingStatistic)
+        blTestingMain.add_widget(self.blTestingStatistic)
         blTestingMain.add_widget(navigatorMenu(self.change_screen))
         self.add_widget(blTestingMain)
 
@@ -61,6 +61,14 @@ class Testing(BaseScreen):
         self.load_question()
 
     def load_question(self):
+
+        self.lblStatistic=Label(text=str(self.context.session.ask_count), color="blue")
+        self.lblStatistic.font_size = Constants.HEADER_HEIGHT * 0.35
+        self.lblStatistic.text_size = (Constants.LABEL_TEXT_SIZE, None)
+        self.lblStatistic.halign = "center"
+        self.lblStatistic.valign = "middle"
+        self.blTestingStatistic.add_widget(self.lblStatistic)
+
         # Получаем номер вопроса для тестирования которого нет в списке правильных ответов
         number = self.context.session.rand_ans()
         self.context.session.get_answer(number)

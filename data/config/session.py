@@ -46,6 +46,8 @@ class Session:
         self.id = question["id"]
         self.question = question["question"]
 
+        self.context.session.ask_count=self.context.session.ask_count-1    
+
         # Копируем ответы и перемешиваем
         self.answers = question["answers"].copy()
         random.shuffle(self.answers)
