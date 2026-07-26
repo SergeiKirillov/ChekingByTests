@@ -6,9 +6,15 @@ class Session:
         self.user:str = ""
         self.questions = [] #список правильных ответов
         self.questions_noOK = [] #Список вопросов на которые ещё не отвечали
-        self.ask_count = 0 #Кол-во вопросов
+        self.question_count:int=0 #кол-во вопросов
+        self.ask_count = 0 #Кол-во ответов
+        self.ask_OK_count:int =0 #Кол-во правильных ответов
+        self.ask_noOK_count:int =0 #Кол-во не правильных ответов
+        self.ask_OK_index:int=0 #индекс правильного ответа
+        self.ask_index:int=0 #индекс ответа
         self.questions_index:int = 0
         self.correct:int = 0
+
 
         self.theme:str = "" #имя файла где лежат тесты # Заполняем на экране session
         self.topic: str = ""  # Название теста для элемента title # Заполняем на экране session
@@ -46,7 +52,7 @@ class Session:
         self.id = question["id"]
         self.question = question["question"]
 
-        self.context.session.ask_count=self.context.session.ask_count-1    
+        self.context.session.ask_count=self.context.session.ask_count+1    
 
         # Копируем ответы и перемешиваем
         self.answers = question["answers"].copy()
@@ -62,9 +68,32 @@ class Session:
         """
         intAns = self.context.session.answers[answer_index]["text"]
         blAns = self.context.session.answers[answer_index]["correct"]
-        if self.context.session.answers[answer_index]["correct"]:
+#цикл который будет проверяет ответы
+        for x in range(len(self.context.session.answers)):
+            if self.context.session.answers[x]["correct"]:
+                self.context.session.ask_Ok_index=x
+                self.context.session.ask_index=answer_index
+                if x == answer_index:
+                  #индекс правильного ответа совпал с выбранным ответом
+                  #print(f"OK (правильный номер{x}, а выбран{answer_index})")
+                  #self.context.session.ask_Ok_index=x
+                  #self.context.session.ask_index=answer_index
+                  return True
+                #Если не совпал то записывам номер правильно ответа
+                else:
+                    #print(f"X (правильный номер{x}, а выбран{answer_index})")               
+                    #self.context.session.ask_Ok_index=x
+                    #self.context.session.ask_index=answer_index
+                    return False
+
+            
+
+
+"""         
+            if self.context.session.answers[answer_index]["correct"]:
             #print("Ответ правильный")
             #
+            self.context.session.ask_OK_count=self.context.session.ask_OK_count+1
             self.context.session.questions.append(self.context.session.id)
             self.context.session.questions.sort()
             self.context.session.questions_noOK.remove(self.context.session.id)
@@ -72,5 +101,6 @@ class Session:
             return True
         else:
             #print("Ответ не правильный")
+            self.context.session.ask_noOK_count=self.context.session.ask_noOK_count+1             
             return False
-        
+ """        

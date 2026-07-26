@@ -85,7 +85,7 @@ class MainScreen(BaseScreen):
             if checkQ != "Undefined":
                 #self.context.session.questions = user.topics[self.context.session.theme]["question_stats"] # Передаем номера вопросов на которые были получены правильные ответы
                 self.context.session.questions = checkQ["question_stats"]  # Передаем номера вопросов на которые были получены правильные ответы
-                self.context.session.ask_count = checkQ["questions_per_session"] #Кол-во вопросов
+                self.context.session.question_count = checkQ["questions_per_session"] #Кол-во вопросов
             else:
                 self.context.session.questions = []
                 self.context.session.ask_count = 20

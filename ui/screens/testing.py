@@ -62,17 +62,22 @@ class Testing(BaseScreen):
 
     def load_question(self):
 
-        self.lblStatistic=Label(text=str(self.context.session.ask_count), color="blue")
+#[x]: Статистика ответов на вопрос. 
+        statistic_text = "Вопрос: "+str(self.context.session.ask_count+1)+"/"+str(self.context.session.question_count) 
+        statistic_OK_noOK = "+"+str(self.context.session.ask_OK_count)+"/ -"+str(self.context.session.ask_noOK_count)
+        self.lblStatistic=Label(text=str(statistic_text+" "+statistic_OK_noOK), color="blue")
         self.lblStatistic.font_size = Constants.HEADER_HEIGHT * 0.35
         self.lblStatistic.text_size = (Constants.LABEL_TEXT_SIZE, None)
         self.lblStatistic.halign = "center"
         self.lblStatistic.valign = "middle"
         self.blTestingStatistic.add_widget(self.lblStatistic)
 
-        # Получаем номер вопроса для тестирования которого нет в списке правильных ответов
+        
+
+# Получаем номер вопроса для тестирования которого нет в списке правильных ответов
         number = self.context.session.rand_ans()
         self.context.session.get_answer(number)
-
+# Загружаем вопрос на экран
         self.lblAsk.text=self.context.session.question
         self.lblAsk.text_size = (self.lblAsk.width, None)
         self.lblAsk.bind(width=lambda instance, value: setattr(instance, 'text_size', (value, None)))
@@ -80,7 +85,7 @@ class Testing(BaseScreen):
         self.lblAsk.size_hint_y = None
         self.blTestingQuestion.add_widget(self.lblAsk)
 
-        # Получаем данные по этому вопросу
+# Загружаем ответы на экран
         self.answer_buttons=[]
         for i, answer in enumerate(self.context.session.answers):
             btn = Button(text=answer["text"])
@@ -102,10 +107,12 @@ class Testing(BaseScreen):
         if self.context.session.checking_answer(index):
            btn.background_color=(0,1,0,1)   
         else:
+           self.answer_buttons[self.context.session.ask_OK_index].background_color=(0,1,0,1)
            btn.background_color=(1,0,0,1)
         btn.disabled = True
 
         Clock.schedule_once(self.show_next_question,2)        
+
 #Следующий вопрос
     def show_next_question(self, dt):
         self.reset_screen()
@@ -113,8 +120,8 @@ class Testing(BaseScreen):
 #Очистка экрана
     def reset_screen(self):
         self.blTestingQuestion.clear_widgets()  
+        self.blTestingStatistic.clear_widgets()
 
 
-#[ ]: Статистика ответов на вопрос. 
 #[ ]: Цикл обратного отсчёта. Максимальное кол-во вопросов
 #[ ]: Сохранение данных в файл после окончания тестирования 
