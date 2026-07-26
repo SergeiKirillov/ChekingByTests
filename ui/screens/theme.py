@@ -25,18 +25,7 @@ class Theme(BaseScreen):
         self.title.add_widget(
             Label(text="Выберите тему для тестирования", color="yellow", font_size=Constants.HEADER_HEIGHT*0.5)
         )
-        
-        # btnThemeElect = Button(text="Электробезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        # btnThemeElect.id="electr"
-        # btnThemeElect.bind(on_release=self.btnThemeSelect_click)
-        # btnThemeProm = Button(text="Промбезопастность",size_hint=(None,None),size=(Constants.BUTTON_WIDTH,Constants.BUTTON_HEIGHT))
-        # btnThemeProm.id="Prombez"
-        # btnThemeProm.bind(on_release=self.btnThemeSelect_click)
         self.blThemeButton=BoxLayout(orientation="vertical")
-        # blThemeButton.add_widget(Widget())
-        # blThemeButton.add_widget(btnThemeElect)
-        # blThemeButton.add_widget(btnThemeProm)
-        # blThemeButton.add_widget(Widget())
         contentCenterAnchor=AnchorLayout(anchor_x = "center",anchor_y = "center")
         contentCenterAnchor.add_widget(self.blThemeButton)
         self.contentCenter.add_widget(contentCenterAnchor)
@@ -46,20 +35,13 @@ class Theme(BaseScreen):
     def btnThemeSelect_click(self, instance):
         if instance.id=="electr":
             screen=self.manager.get_screen("testing") #Получаем доступ к экрану
-            #screen.test_name="Электробезопастность"   #Присваиваем переменной этого экрана значение 
-            #screen.data={"topic":"Электробезопастность","questions":10,"user":"019261"}
             self.session.topic="Электробезопастность"
             self.session.theme="electr"
         elif instance.id=="Prombez":
             screen=self.manager.get_screen("testing")
-            #screen.test_name="Промбезопастность"
-            #screen.data={"topic":"Промбезопастность","questions":10,"user":"019261"}
             self.session.topic="Промбезопастность"
             self.session.theme="Prombez"
         
-        #print(self.context.session.theme)
-        #print(self.context.session.topic)
-
         self.manager.current="testing"            #Отображаем экран    
 
     def change_screen(self, screen):
@@ -90,4 +72,5 @@ class Theme(BaseScreen):
         self.context.session.topic=str(instance.test.title)
         self.context.session.theme=str(instance.test.file)
         self.manager.current = "login"
-        #screen = self.manager.get_screen("testing")
+
+#[FIXME]: Кнопки с темами не по центу   

@@ -19,7 +19,7 @@ class BaseScreen(Screen):
         #TODO: элемент Статус на базовом экране
         self.status = BoxLayout(orientation="horizontal", size_hint_y=None, height=30)
         #TODO: Элемент основной контент на базовом экране
-        self.content = BoxLayout()
+        self.content = BoxLayout(orientation="horizontal")
         self.contentRight=BoxLayout(orientation="vertical")
         self.contentLeft=BoxLayout(orientation="vertical")
         self.contentCenter=BoxLayout(orientation="vertical")

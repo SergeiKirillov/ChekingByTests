@@ -115,13 +115,19 @@ class Testing(BaseScreen):
 
 #Следующий вопрос
     def show_next_question(self, dt):
-        self.reset_screen()
-        self.load_question()
+#[x]: Цикл обратного отсчёта. Максимальное кол-во вопросов
+        if (self.context.session.ask_count<self.context.session.question_count):
+            self.reset_screen()
+            self.load_question()
+        else:
+#[ ]: Сохранение данных в файл после окончания тестирования 
+            self.manager.current = "statictic"
 #Очистка экрана
     def reset_screen(self):
         self.blTestingQuestion.clear_widgets()  
         self.blTestingStatistic.clear_widgets()
 
 
-#[ ]: Цикл обратного отсчёта. Максимальное кол-во вопросов
-#[ ]: Сохранение данных в файл после окончания тестирования 
+
+
+#[FIXME]: Переделать интерфейс под базовый экран

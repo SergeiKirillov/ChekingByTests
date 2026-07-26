@@ -75,15 +75,15 @@ class Session:
                 self.context.session.ask_index=answer_index
                 if x == answer_index:
                   #индекс правильного ответа совпал с выбранным ответом
-                  #print(f"OK (правильный номер{x}, а выбран{answer_index})")
-                  #self.context.session.ask_Ok_index=x
-                  #self.context.session.ask_index=answer_index
-                  return True
+                    self.context.session.ask_OK_count=self.context.session.ask_OK_count+1
+                    self.context.session.questions.append(self.context.session.id)
+                    self.context.session.questions.sort()
+                    self.context.session.questions_noOK.remove(self.context.session.id)
+                    self.context.session.questions_noOK.sort()
+                    return True
                 #Если не совпал то записывам номер правильно ответа
                 else:
-                    #print(f"X (правильный номер{x}, а выбран{answer_index})")               
-                    #self.context.session.ask_Ok_index=x
-                    #self.context.session.ask_index=answer_index
+                    self.context.session.ask_noOK_count=self.context.session.ask_noOK_count+1
                     return False
 
             
