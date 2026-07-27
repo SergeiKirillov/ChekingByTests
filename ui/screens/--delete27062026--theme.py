@@ -31,6 +31,19 @@ class Theme(BaseScreen):
         self.contentCenter.add_widget(contentCenterAnchor)
     
 
+
+    def btnThemeSelect_click(self, instance):
+        if instance.id=="electr":
+            screen=self.manager.get_screen("testing") #Получаем доступ к экрану
+            self.session.topic="Электробезопастность"
+            self.session.theme="electr"
+        elif instance.id=="Prombez":
+            screen=self.manager.get_screen("testing")
+            self.session.topic="Промбезопастность"
+            self.session.theme="Prombez"
+        
+        self.manager.current="testing"            #Отображаем экран    
+
     def change_screen(self, screen):
         if screen=="exit":
             App.get_running_app().stop()
@@ -46,8 +59,9 @@ class Theme(BaseScreen):
         for test in tests:
             btn=Button(
                 text=test.description,
-                size_hint_y=None,
+                size_hint=(None,None),
                 height =Constants.BUTTON_HEIGHT,
+                width=Constants.BUTTON_WIDTH,
             )
             btn.test=test
             btn.bind(on_release=self.btnThemeSelect_click)
@@ -59,3 +73,4 @@ class Theme(BaseScreen):
         self.context.session.theme=str(instance.test.file)
         self.manager.current = "login"
 
+#[FIXME]: Кнопки с темами не по центу   

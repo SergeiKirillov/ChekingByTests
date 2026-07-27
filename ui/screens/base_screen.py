@@ -20,8 +20,8 @@ class BaseScreen(Screen):
         self.status = BoxLayout(orientation="horizontal", size_hint_y=None, height=30)
         #TODO: Элемент основной контент на базовом экране
         self.content = BoxLayout(orientation="horizontal")
-        self.contentRight=BoxLayout(orientation="vertical")
-        self.contentLeft=BoxLayout(orientation="vertical")
+        self.contentRight=BoxLayout(orientation="vertical", size_hint_x=None, width=20)
+        self.contentLeft=BoxLayout(orientation="vertical", size_hint_x=None, width=20)
         self.contentCenter=BoxLayout(orientation="vertical")
         self.content.add_widget(self.contentLeft)
         self.content.add_widget(self.contentCenter)
