@@ -115,4 +115,4 @@ class Testing(BaseScreen):
         self.contentCenter.clear_widgets()
         self.status.clear_widgets()
 
-#[FIXME]: Проверить ответ на первый вопрос
+

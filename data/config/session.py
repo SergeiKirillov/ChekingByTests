@@ -71,7 +71,7 @@ class Session:
 #цикл который будет проверяет ответы
         for x in range(len(self.context.session.answers)):
             if self.context.session.answers[x]["correct"]:
-                self.context.session.ask_Ok_index=x
+                self.context.session.ask_OK_index=x
                 self.context.session.ask_index=answer_index
                 if x == answer_index:
                   #индекс правильного ответа совпал с выбранным ответом
