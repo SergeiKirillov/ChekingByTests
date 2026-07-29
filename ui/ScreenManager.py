@@ -41,7 +41,7 @@ class MyApp(App):
         sc.add_widget(MainScreen(name="login"))  #окно ввода табельного номера
         sc.add_widget(Setting(name="setting"))
         sc.add_widget(Testing(name="testing"))
-        sc.add_widget(Exsam(name="exsam"))
+        #sc.add_widget(Exsam(name="exsam"))
         sc.add_widget(Statictic(name="statictic"))
     
         return sc
