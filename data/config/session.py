@@ -77,6 +77,7 @@ class Session:
                   #индекс правильного ответа совпал с выбранным ответом
                     self.context.session.ask_OK_count=self.context.session.ask_OK_count+1
                     self.context.session.questions.append(self.context.session.id)
+                    print(f"Номер OK-{self.context.session.id}")
                     self.context.session.questions.sort()
                     self.context.session.questions_noOK.remove(self.context.session.id)
                     self.context.session.questions_noOK.sort()

@@ -4,6 +4,8 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
+
+from data.users.userDB import UserDB
 from ui.screens.navigator import navigatorMenu
 from kivy.metrics import dp,sp
 from data.config.constants import Constants
@@ -50,3 +52,8 @@ class Statictic(BaseScreen):
         self.lblStaticticQuestionCount.text=self.lblStaticticQuestionCount.text+str(self.context.session.ask_count)
         self.lblStaticticQuestionCountOK.text=self.lblStaticticQuestionCountOK.text+str(self.context.session.ask_OK_count)
         self.lblStaticticQuestionCountNotOK.text=self.lblStaticticQuestionCountNotOK.text+str(self.context.session.ask_noOK_count)
+
+
+        self.context.userdb.save_user()
+
+        # [ ]: добавить кнопку подтверждения записи
