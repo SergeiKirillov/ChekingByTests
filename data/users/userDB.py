@@ -96,39 +96,10 @@ class UserDB:
                 }   
             
             self.context.database.save_user(self.context.session.user, user_data)
+            return True
 
         except Exception as e:
-            raise e
+           
+            return False
+            #raise
 
-    def save_user_до_30072026(self, correct_questions):
-        """
-        login - имя пользователя
-        theme - тема контрольных заданий и равна имени файла с контрольными вопросами
-        correct_questions - список номеров вопросов, на которые пользователь ответил правильно
-        """
-        try:
-
-            user_data = self.context.database.load_user(self.context.session.user)
-
-            # Ищем ключь равный имени файла теста
-            if self.context.session.theme in user_data['topics']:
-                # Если найден то добавляем в [ключ][ключ] список правильных ответов
-                # Добавляем новые вопросы, избегая дубликатов
-                current_questions = set(user_data['topics'][self.context.session.theme]['question_stats'])
-                for qid in correct_questions:
-                    current_questions.add(qid)
-                user_data['topics'][self.context.session.theme]["question_stats"] = sorted(list(current_questions))
-
-            else:
-                # сортируем по возрастанию
-                correct_questions_sorted = sorted(list(correct_questions))
-                # Если ключ не найден, то добавляем всю секцию
-                user_data["topics"][self.context.session.theme] = {
-                    "questions_per_session": 10,
-                    "question_stats": correct_questions_sorted
-                }
-
-            self.context.database.save_user(self.context.session.user, user_data)
-
-        except Exception as e:
-            raise e
